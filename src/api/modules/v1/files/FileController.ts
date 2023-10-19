@@ -6,13 +6,13 @@ import { IFileController } from "../../../../common/interfaces/index.ts";
 
 
 class Files implements IFileController {
-  public async uploadCsv(ctx: RouterContext<string>): Promise<void> {
+  public async uploadCsvCoordinator(ctx: RouterContext<string>): Promise<void> {
     try {
       const formData = ctx.request.body({ type: "form-data" });
       const body = await formData.value.read();
 
       if (body.files) {
-       await FileService.handlerFiles(body.files);
+       await FileService.handlerFilesCoordinator(body.files);
 
         ctx.response.status = Status.Created;
         ctx.response.body = {

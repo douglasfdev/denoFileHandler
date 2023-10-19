@@ -3,6 +3,6 @@ import FileController from "../files/FileController.ts";
 
 const file = new Router();
 
-file.post("uploadFile/", FileController.uploadCsv)
+file.post("uploadFileCoordinator/", FileController.uploadCsvCoordinator)
 
 export { file };

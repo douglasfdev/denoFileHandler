@@ -1,8 +1,8 @@
 import { CreateBucketOutput, CreateBucketRequest, PutObjectOutput } from "https://deno.land/x/aws_api@v0.8.1/services/s3/structs.ts";
+import { S3, GetObjectOutput } from "https://deno.land/x/aws_api@v0.8.1/services/s3/mod.ts";
 import { awsS3Config } from "../../../../common/aws.config.ts";
 import { env } from "../../../../common/env.config.ts";
 import { ApiFactory } from "https://deno.land/x/aws_api@v0.8.1/client/mod.ts";
-import { S3 } from "https://deno.land/x/aws_api@v0.8.1/services/s3/mod.ts";
 import { log } from "../../../../common/logger.ts";
 
 class SimpleCloudStorage {
@@ -35,7 +35,7 @@ class SimpleCloudStorage {
     })
   }
 
-  public async readFileFromS3(objectKey: string) {
+  public async readFileFromS3(objectKey: string): Promise<Array<string> | undefined> {
     return this.handleReadFile(objectKey);
   }
 
@@ -57,11 +57,40 @@ class SimpleCloudStorage {
           chunck.push(value);
         }
         const [value] = chunck;
-        return new TextDecoder('utf-8').decode(value).replace(/\r\n|\n/g, "\n").split('\n')
+        return new TextDecoder('utf-8').decode(value).replace(/\r\n|\n/g, "\n").split('\n');
       }
       // deno-lint-ignore no-explicit-any
     } catch (er: Error | any | unknown) {
       log.error(er.message);
+    }
+  }
+
+  public async downloadFileFromS3(objectKey: string): Promise<string | undefined> {
+    return this.handleDownloadFile(objectKey);
+  }
+
+  private async handleDownloadFile(objectKey: string): Promise<string | undefined> {
+    const s3 = await this.makeNewBucket();
+    try {
+      const result: GetObjectOutput = await s3.getObject({
+        Bucket: this.bucketName,
+        Key: objectKey,
+      });
+
+      if (result.Body) {
+        const chunks: Array<Uint8Array> = [];
+        const reader = result.Body.getReader();
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          chunks.push(value);
+        }
+        const [value] = chunks;
+        return new TextDecoder('utf-8').decode(value).replace(/\r\n|\n/g, "\n").split('\n').join('\n');
+      }
+    } catch (error) {
+      log.error(error.message);
     }
   }
 
