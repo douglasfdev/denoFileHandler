@@ -6,5 +6,7 @@
     "start": "APP_ENV=production deno run --allow-all src/server.ts",
     "dev": "APP_ENV=development deno run --allow-read --allow-net --allow-env --allow-write --watch src/server.ts",
     "docker:dev": "docker-compose -f ./docker/docker-compose.yml up -d"
-  }
+  },
+  "allow-net": "0.0.0.0:8080",
+  "allow-read": "."
 }

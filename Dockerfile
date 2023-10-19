@@ -6,8 +6,8 @@ WORKDIR /www/deno/app
 
 USER deno
 
+COPY ./deno.json .
+
 COPY . .
 
-RUN deno cache src/server.ts
-
-CMD ["run", "--allow-all", "start"]
+CMD ["deno", "run", "--allow-all", "--config", "deno.json", "src/server.ts"]
