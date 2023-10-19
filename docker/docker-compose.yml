@@ -3,9 +3,11 @@ version: "3"
 services:
   app:
     container_name: vdt-csv-profile-service
-    build: .
+    build:
+      context: .
+      dockerfile: ../Dockerfile
     ports:
       - "5000:8080"
     volumes:
-      = .:/www/deno/app
+      - .:/www/deno/app
     command: deno task dev

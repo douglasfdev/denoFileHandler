@@ -6,11 +6,8 @@ WORKDIR /www/deno/app
 
 USER deno
 
-COPY deps.ts .
-RUN deno cache deps.ts
-
 COPY . .
 
-RUN deno cache src/main.ts
+RUN deno cache src/server.ts
 
-CMD ["run", "--allow-all", "main.ts"]
+CMD ["run", "--allow-all", "start"]
