@@ -1,8 +1,6 @@
 import { FormDataFile } from "https://deno.land/x/oak@v12.6.1/mod.ts";
 import SimpleCloudStorage from "../components/aws.component.ts";
 import { IFileService } from '../../../../common/interfaces/index.ts';
-import Usuario from '../models/UsuarioPassageiro.ts';
-import ContaConvite from "../models/Invites.ts";
 
 class FileService implements IFileService {
   private s3: typeof SimpleCloudStorage;
@@ -39,17 +37,6 @@ class FileService implements IFileService {
           const [coordinatedEmails, coordinatorEmails, Coordinator] = result.split(",");
           emailsCoordinated.push(coordinatedEmails);
           emailsCoordinator.push(coordinatorEmails);
-        }
-
-        const emails = await Usuario.getUserByEmails(emailsCoordinated);
-        const { emailsNotFounded } = emails;
-
-        if (emailsNotFounded) {
-          const emailsNotFoundedFileName = `emailsNotFounded-${crypto.randomUUID()}.csv`;
-
-          await this.s3.handlerBucket(new TextEncoder().encode(emailsNotFounded.join("\n")), emailsNotFoundedFileName);
-
-          await this.s3.downloadFileFromS3(emailsNotFoundedFileName);;
         }
       }
     }

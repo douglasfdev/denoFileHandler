@@ -10,4 +10,4 @@ COPY ./deno.json .
 
 COPY . .
 
-CMD ["deno", "run", "--allow-all", "--config", "deno.json", "src/server.ts"]
+CMD ["deno", "run", "start", "--allow-all", "--config", "deno.json", "src/server.ts"]

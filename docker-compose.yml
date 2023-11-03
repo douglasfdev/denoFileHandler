@@ -2,12 +2,34 @@ version: "3"
 
 services:
   app:
-    container_name: vdt-csv-profile-service
+    container_name: csv-profile-service
     build:
       context: .
       dockerfile: ./Dockerfile
+    tty: true
     ports:
-      - "5000:8080"
+      - "5001:8080"
     volumes:
       - .:/www/deno/app
     command: deno task dev
+    restart: always
+    depends_on:
+      - db
+
+  db:
+    container_name: db-csv-profile
+    build: .docker/mysql
+    tty: true
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=p@a55w0rd
+      - MYSQL_ROOT_PASSWORD=p@a55w0rd
+      - MYSQL_DATABASE=csvprofile
+    volumes:
+      - .docker/dbdata:/var/www/html
+
+volumes:
+  db-data: {}
