@@ -15,6 +15,7 @@ services:
     restart: always
     depends_on:
       - db
+      - localstack
 
   db:
     container_name: db-csv-profile
@@ -30,6 +31,28 @@ services:
       - MYSQL_DATABASE=csvprofile
     volumes:
       - .docker/dbdata:/var/www/html
+
+  localstack:
+    container_name: aws-localstack
+    image: localstack/localstack
+    network_mode: bridge
+    ports:
+      - "127.0.0.1:4566:4566"            # LocalStack Gateway
+      - "127.0.0.1:4510-4559:4510-4559"  # external services port range
+    environment:
+      - DEBUG=${DEBUG-}
+      - AWS_DEFAULT_REGION=sa-east-1
+      - AWS_ACCESS_KEY_ID=fakeAccessKeyId
+      - AWS_SECRET_ACCESS_KEY=fakeSecretAccessKey
+      - AKID=fakeAccessKeyId
+      - DEFAULT_REGION=sa-east-1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - SREVICES=s3,sns,sqs,ses
+      - EDGE_PORT=4566
+      - LOCALSTACK_API_KEY=3oGpLxt9DD
+    volumes:
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
 
 volumes:
   db-data: {}

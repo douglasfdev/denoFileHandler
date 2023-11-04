@@ -1,1 +1,3 @@
 .docker/dbdata
+volume
+aws
