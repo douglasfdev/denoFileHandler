@@ -5,4 +5,4 @@ export const mySqlConfig = {
   username: env.MYSQL_USER,
   password: env.MYSQL_PASSWORD,
   db: env.MYSQL_DATABASE,
-}
+};

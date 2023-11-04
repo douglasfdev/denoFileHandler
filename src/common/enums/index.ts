@@ -1,1 +1,1 @@
-export * from "./UserAssociationStatusEnum.ts";
+export * from "./PersonEnum.ts";

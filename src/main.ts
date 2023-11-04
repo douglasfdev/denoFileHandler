@@ -3,10 +3,11 @@ import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
 import { routing } from "./api/modules/v1/routes/index.ts";
 import { type CorsOptions } from "https://deno.land/x/cors@v1.2.2/mod.ts";
 import loggerRoutes from "./api/middlewares/Logger/logger.routes.ts";
-
+import './api/db/migrations/index.ts';
 
 class App {
   public app: Application;
+
   private corsOptions: CorsOptions = {
     origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
