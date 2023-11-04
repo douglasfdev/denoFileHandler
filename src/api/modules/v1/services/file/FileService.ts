@@ -1,6 +1,6 @@
 import { FormDataFile } from "https://deno.land/x/oak@v12.6.1/mod.ts";
-import SimpleCloudStorage from "../components/aws.component.ts";
-import { IFileService } from '../../../../common/interfaces/index.ts';
+import SimpleCloudStorage from "../../components/aws.component.ts";
+import { IFileService } from '../../../../../common/interfaces/index.ts';
 
 class FileService implements IFileService {
   private s3: typeof SimpleCloudStorage;

@@ -1,8 +1,8 @@
 import { RouterContext } from "https://deno.land/x/oak@v12.6.1/mod.ts";
-import { log } from "../../../../common/logger.ts";
+import { log } from "../../../../../common/logger.ts";
 import { Status } from "https://deno.land/std@0.200.0/http/http_status.ts";
-import FileService from "./FileService.ts";
-import { IFileController } from "../../../../common/interfaces/index.ts";
+import { FileService } from "../../services/index.ts";
+import { IFileController } from "../../../../../common/interfaces/index.ts";
 
 
 class Files implements IFileController {
