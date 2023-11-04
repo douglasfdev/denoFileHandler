@@ -1,8 +1,8 @@
+import { ApiFactory } from "https://deno.land/x/aws_api@v0.8.1/client/mod.ts";
 import { CreateBucketOutput, CreateBucketRequest, PutObjectOutput } from "https://deno.land/x/aws_api@v0.8.1/services/s3/structs.ts";
 import { S3, GetObjectOutput } from "https://deno.land/x/aws_api@v0.8.1/services/s3/mod.ts";
 import { awsS3Config } from "../../../../common/aws.config.ts";
 import { env } from "../../../../common/env.config.ts";
-import { ApiFactory } from "https://deno.land/x/aws_api@v0.8.1/client/mod.ts";
 import { log } from "../../../../common/logger.ts";
 
 class SimpleCloudStorage {
@@ -117,6 +117,7 @@ await new SimpleCloudStorage(
   new ApiFactory({
     region: awsS3Config.region,
     credentials: awsS3Config,
+    fixedEndpoint: 'http://localhost:4566'
   }),
 ).init();
 
@@ -124,6 +125,7 @@ export default new SimpleCloudStorage(
   new S3(new ApiFactory({
     region: awsS3Config.region,
     credentials: awsS3Config,
+    fixedEndpoint: 'http://localhost:4566'
   }
   )),
   new ApiFactory({

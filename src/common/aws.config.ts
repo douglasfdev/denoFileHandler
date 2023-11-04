@@ -1,4 +1,3 @@
-import { CreateBucketRequest } from "https://deno.land/x/aws_api@v0.8.1/services/s3/structs.ts";
 import { env } from "./env.config.ts"
 
 export const awsS3Config = {
