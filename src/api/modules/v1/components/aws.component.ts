@@ -16,6 +16,7 @@ class SimpleCloudStorage {
   ) {
     this.s3 = s3;
     this.apiFactory = apiFactory;
+    this.init();
   }
 
   public async init() {
@@ -28,6 +29,7 @@ class SimpleCloudStorage {
 
   private async setBucket(body: Uint8Array, objectKey: string): Promise<PutObjectOutput> {
     const s3 = await this.makeNewBucket();
+
     return s3.putObject({
       Body: body,
       Bucket: this.bucketName,
@@ -117,19 +119,15 @@ await new SimpleCloudStorage(
   new ApiFactory({
     region: awsS3Config.region,
     credentials: awsS3Config,
-    fixedEndpoint: 'http://localhost:4566'
+    fixedEndpoint: env.AWS_ENDPOINT,
   }),
 ).init();
 
 export default new SimpleCloudStorage(
-  new S3(new ApiFactory({
-    region: awsS3Config.region,
-    credentials: awsS3Config,
-    fixedEndpoint: 'http://localhost:4566'
-  }
-  )),
+  new S3(new ApiFactory()),
   new ApiFactory({
     region: awsS3Config.region,
     credentials: awsS3Config,
+    fixedEndpoint: env.AWS_ENDPOINT,
   })
 );
