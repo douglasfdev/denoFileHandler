@@ -1,15 +1,18 @@
 import { FormDataFile } from "$deps";
 import { S3 } from "$components";
-import { IFileDTO, IFileService } from "$common";
-import { FileRespository } from "$repositories";
+import { IFileDTO, IFileService, IPersonDTO } from "$common";
+import { FileRespository, PersonRepository } from "$repositories";
+import { PersonService } from "$services";
 
 class FileService implements IFileService {
   private s3: typeof S3;
   private fileRepository: typeof FileRespository;
+  private personService: typeof PersonService;
 
   constructor(s3: typeof S3) {
     this.s3 = s3;
     this.fileRepository = FileRespository;
+    this.personService = PersonService;
   }
 
   public async handlerFilesPerson(files: Array<FormDataFile>): Promise<void> {
@@ -17,7 +20,7 @@ class FileService implements IFileService {
   }
 
   private async processFilesPerson(files: Array<FormDataFile>): Promise<void> {
-    const person: Array<string> = [];
+    const user: Array<Partial<IPersonDTO>> = []
 
     for (const file of files) {
       const isTypeCsvOrXml = file.contentType === "text/csv" ||
@@ -36,13 +39,21 @@ class FileService implements IFileService {
 
         await this.s3.handlerBucket(whithoutHeader, filename);
 
-        const readS3 = await this.s3.readFileFromS3(filename) as Array<string>;
-
         await this.fileRepository.handleCreate(filename);
+
+        const readS3 = await this.s3.readFileFromS3(filename) as Array<string>;
 
         for (const result of readS3) {
           const [name, age, sex, size, weight] = result.split(",");
-          console.log(result.split(','))
+          const personObject = {
+            name,
+            age: Number(age),
+            sex,
+            size: Number(size),
+            weight: Number(weight)
+          }
+
+          await this.personService.create(personObject)
         }
       }
     }

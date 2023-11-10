@@ -7,6 +7,7 @@
     "$repositories": "./src/api/modules/v1/repository/index.ts",
     "$components": "./src/api/modules/v1/components/index.ts",
     "$models": "./src/api/modules/v1/models/index.ts",
+    "$interfaces": "./src/common/interfaces/index.ts",
     "$middlewares": "./src/api/middlewares/index.ts",
     "$routes": "./src/api/modules/v1/routes/index.ts",
     "$db": "./src/api/db/index.ts"

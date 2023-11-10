@@ -20,7 +20,7 @@ class FileRepository extends File {
         );
       `;
 
-    return await client.query(q, [file.replace(/\n/, "")]);
+    return client.query(q, [file.replace(/\n/, "")]);
   }
 
   public async list(): Promise<Array<IFileDTO>> {

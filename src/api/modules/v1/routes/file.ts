@@ -4,6 +4,6 @@ import { FileController } from "$controllers";
 const file = new Router();
 
 file.post("uploadFile/", FileController.uploadCsv);
-file.get("listAll/", FileController.listAllFiles);
+file.get("listAllFiles/", FileController.listAllFiles);
 
 export { file };

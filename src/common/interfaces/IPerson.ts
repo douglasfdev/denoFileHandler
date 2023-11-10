@@ -4,7 +4,7 @@ export interface IPersonDTO {
   id: string;
   name: string;
   age: number;
-  sex: PersonEnum;
+  sex: string;
   size: number;
   weight: number;
   created_at?: Date;
