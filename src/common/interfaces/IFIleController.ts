@@ -1,4 +1,4 @@
-import { RouterContext } from 'https://deno.land/x/oak@v12.6.1/mod.ts';
+import { RouterContext } from '$deps';
 export interface IFileController {
   uploadCsv(ctx: RouterContext<string>): Promise<void>;
 }

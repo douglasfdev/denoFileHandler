@@ -1,7 +1,9 @@
-import { Status } from "https://deno.land/std@0.200.0/http/http_status.ts";
-import { RouterContext } from "https://deno.land/x/oak@v12.6.1/mod.ts";
-import { log } from "../../../../../common/logger.ts";
-import { PersonService } from "../../services/index.ts";
+import {
+  Status,
+  RouterContext
+} from "$deps";
+import { log } from "$common";
+import { PersonService } from "$services";
 
 class PersonController {
   public async listPersons(ctx: RouterContext<string>) {

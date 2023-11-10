@@ -1,7 +1,7 @@
-import { PersonEnum } from "../../../../../common/enums/PersonEnum.ts";
-import { IPersonDTO } from "../../../../../common/interfaces/index.ts";
+import { PersonEnum } from "$common";
+import { IPersonDTO } from "$common";
 
-class Person implements IPersonDTO{
+export class Person implements IPersonDTO{
   id!: string;
   name!: string;
   age!: number;
@@ -9,5 +9,3 @@ class Person implements IPersonDTO{
   size!: number;
   weight!: number;
 }
-
-export default new Person();

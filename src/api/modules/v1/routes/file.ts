@@ -1,5 +1,5 @@
-import { Router } from "https://deno.land/x/oak@v12.6.1/mod.ts";
-import { FileController } from "../controllers/index.ts";
+import { Router } from "$deps";
+import { FileController } from "$controllers";
 
 const file = new Router();
 

@@ -1,8 +1,12 @@
-import { Application } from "https://deno.land/x/oak@v12.6.1/mod.ts";
-import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
-import { routing } from "./api/modules/v1/routes/index.ts";
-import { type CorsOptions } from "https://deno.land/x/cors@v1.2.2/mod.ts";
-import loggerRoutes from "./api/middlewares/Logger/logger.routes.ts";
+import {
+  Application,
+  oakCors,
+  CorsOptions
+} from "$deps";
+import { routing } from "$routes";
+import { LoggerRoutes } from "$middlewares";
+import { log, env } from '$common';
+
 import './api/db/migrations/index.ts';
 
 class App {
@@ -12,21 +16,31 @@ class App {
     origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
     optionsSuccessStatus: 200,
-  }
+  };
 
   constructor() {
     this.app = new Application();
     this.middlewares();
+    this.init();
     this.routes();
   }
 
   private middlewares() {
     this.app.use(oakCors(this.corsOptions));
-    this.app.use(loggerRoutes);
+    this.app.use(LoggerRoutes);
   }
 
   private routes() {
     this.app.use(routing)
+  }
+
+  private init() {
+    this.app.listen({ port: 5002 });
+    this.app.addEventListener("listen", ({ hostname, port, secure }) => {
+      log.info(`Database: ${env.MYSQL_DATABASE}`);
+      log.success(`Server is listening on ${secure ? "https" : "http"}://${hostname}:${port}`);
+      log.success(`Server is running on ${hostname}:${port}`)
+    })
   }
 }
 

@@ -1,10 +1,19 @@
 {
   "imports": {
-    "$std/": "https://deno.land/std@0.204.0/"
+    "$common": "./src/common/index.ts",
+    "$deps": "./src/deps/index.ts",
+    "$controllers": "./src/api/modules/v1/controllers/index.ts",
+    "$services": "./src/api/modules/v1/services/index.ts",
+    "$repositories": "./src/api/modules/v1/repository/index.ts",
+    "$components": "./src/api/modules/v1/components/index.ts",
+    "$models": "./src/api/modules/v1/models/index.ts",
+    "$middlewares": "./src/api/middlewares/index.ts",
+    "$routes": "./src/api/modules/v1/routes/index.ts",
+    "$db": "./src/api/db/index.ts"
   },
   "tasks": {
-    "start": "APP_ENV=production deno run --allow-all src/server.ts",
-    "dev": "APP_ENV=development deno run --allow-read --allow-net --allow-env --allow-write --watch src/server.ts",
+    "start": "APP_ENV=production deno run --allow-all src/main.ts",
+    "dev": "APP_ENV=development deno run --allow-read --allow-net --allow-env --allow-write --watch src/main.ts",
     "docker:dev": "docker-compose -f ./docker/docker-compose.yml up -d"
   },
   "allow-net": "0.0.0.0:5001",

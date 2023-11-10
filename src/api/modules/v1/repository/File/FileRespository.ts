@@ -1,6 +1,6 @@
-import { IFileDTO } from "../../../../../common/interfaces/index.ts";
-import { client } from "../../../../db/connection.ts";
-import { File } from "../../models/file/File.ts";
+import { IFileDTO } from "$common";
+import { client } from "$db";
+import { File } from "$models";
 
 class FileRepository extends File {
   public table: string = 'tb_filename';

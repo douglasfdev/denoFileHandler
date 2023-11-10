@@ -1,4 +1,4 @@
-import { config } from "https://deno.land/x/dotenv/mod.ts";
+import { config } from "$deps";
 
 async function loadEnvironments(environment: string) {
   const path = `src/environments/${environment}.env`;

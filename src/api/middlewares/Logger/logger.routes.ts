@@ -1,5 +1,8 @@
-import { Context, Middleware } from "https://deno.land/x/oak@v12.6.1/mod.ts";
-import { log } from "../../../common/logger.ts";
+import {
+  Context,
+  Middleware
+} from "$deps";
+import { log } from "$common";
 
 class LoggerMiddleware {
   public requestLogger: Middleware = async (ctx: Context, next: () => Promise<unknown>) => {

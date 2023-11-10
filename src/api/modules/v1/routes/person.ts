@@ -1,5 +1,5 @@
-import { Router } from "https://deno.land/x/oak@v12.6.1/mod.ts";
-import { PersonController } from '../controllers/index.ts';
+import { Router } from "$deps";
+import { PersonController } from '$controllers';
 
 const person = new Router();
 
