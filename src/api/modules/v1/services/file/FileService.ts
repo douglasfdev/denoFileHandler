@@ -1,18 +1,15 @@
 import { FormDataFile } from "$deps";
 import { S3 } from "$components";
 import { IFileDTO, IFileService, IPersonDTO } from "$common";
-import { FileRespository, PersonRepository } from "$repositories";
-import { PersonService } from "$services";
+import { FileRespository } from "$repositories";
 
 class FileService implements IFileService {
   private s3: typeof S3;
   private fileRepository: typeof FileRespository;
-  private personService: typeof PersonService;
 
   constructor(s3: typeof S3) {
     this.s3 = s3;
     this.fileRepository = FileRespository;
-    this.personService = PersonService;
   }
 
   public async handlerFilesPerson(files: Array<FormDataFile>): Promise<void> {
@@ -40,21 +37,6 @@ class FileService implements IFileService {
         await this.s3.handlerBucket(whithoutHeader, filename);
 
         await this.fileRepository.handleCreate(filename);
-
-        const readS3 = await this.s3.readFileFromS3(filename) as Array<string>;
-
-        for (const result of readS3) {
-          const [name, age, sex, size, weight] = result.split(",");
-          const personObject = {
-            name,
-            age: Number(age),
-            sex,
-            size: Number(size),
-            weight: Number(weight)
-          }
-
-          await this.personService.create(personObject)
-        }
       }
     }
   }

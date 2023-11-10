@@ -22,23 +22,23 @@ class Files implements IFileController {
     // deno-lint-ignore no-explicit-any
     } catch (er: Error | any | unknown) {
       ctx.response.status = Status.BadRequest;
+      log.error(er.message);
       ctx.response.body = {
         error: er.message,
       };
-      log.error(er.message);
     }
   }
 
   public async listAllFiles(ctx: RouterContext<string>) {
     try {
       ctx.response.status = Status.OK;
-      ctx.response.body = await FileService.listFiles();
+      return ctx.response.body = await FileService.listFiles();
     } catch (er: Error | any | unknown) {
       ctx.response.status = Status.BadRequest;
-      ctx.response.body = {
+      log.error(er.message);
+      return ctx.response.body = {
         error: er.message,
       };
-      log.error(er.message);
     }
   }
 }

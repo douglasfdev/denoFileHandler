@@ -18,10 +18,14 @@ class PersonController {
     }
   }
 
-  public create(ctx: RouterContext<string>) {
+  public async create(ctx: RouterContext<string>) {
     try {
       const body = ctx.request.body();
-      console.log(body);
+      const { filename } = await body.value;
+
+      const person = await PersonService.create(filename);
+
+      return ctx.response.body = person;
     } catch (er) {
       ctx.response.status = Status.BadRequest;
       log.error(er.message);
