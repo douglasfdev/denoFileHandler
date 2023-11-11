@@ -11,7 +11,7 @@ import {
   log
 } from "$common";
 
-class SimpleCloudStorage {
+export class SimpleCloudStorage {
   private apiFactory: ApiFactory;
   private bucketName = env.S3_BUCKET_NAME;
 
@@ -22,7 +22,7 @@ class SimpleCloudStorage {
     this.init();
   }
 
-  public init() {
+  private init() {
     return this.createBucket();
   }
 
@@ -30,8 +30,8 @@ class SimpleCloudStorage {
     return await this.setBucket(body, objectKey);
   }
 
-  private async setBucket(body: Uint8Array, objectKey: string): Promise<PutObjectOutput> {
-    const s3 = await this.makeNewBucket();
+  private setBucket(body: Uint8Array, objectKey: string): Promise<PutObjectOutput> {
+    const s3 = this.makeNewBucket();
 
     return s3.putObject({
       Body: body,
@@ -45,7 +45,7 @@ class SimpleCloudStorage {
   }
 
   private async handleReadFile(objectKey: string): Promise<Array<string> | undefined> {
-    const s3 = await this.makeNewBucket();
+    const s3 = this.makeNewBucket();
 
     try {
       const result = await s3.getObject({
@@ -76,7 +76,7 @@ class SimpleCloudStorage {
   }
 
   private async handleDownloadFile(objectKey: string): Promise<string | undefined> {
-    const s3 = await this.makeNewBucket();
+    const s3 = this.makeNewBucket();
     try {
       const result: GetObjectOutput = await s3.getObject({
         Bucket: this.bucketName,
@@ -101,7 +101,7 @@ class SimpleCloudStorage {
   }
 
   private async createBucket(): Promise<CreateBucketOutput> {
-    const s3 = this.makeNewBucket()
+    const s3 = this.makeNewBucket();
     const createBucket = await s3.createBucket(this.configBucket());
     return createBucket;
   }

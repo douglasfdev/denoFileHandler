@@ -1,8 +1,10 @@
 import { PersonRepository } from "$repositories";
 import { IPersonDTO } from "$common";
-import { S3 } from "$components";
+import {
+  S3,
+} from "$components";
 
-class PersonService {
+export class PersonService {
   private personRpository: typeof PersonRepository;
   private s3: typeof S3;
 
@@ -26,7 +28,7 @@ class PersonService {
       throw new Error(`Archive is required`);
     }
 
-    const person: Array<Partial<IPersonDTO>> = []
+    const person: Array<Partial<IPersonDTO>> = [];
     const readS3 = await this.s3.readFileFromS3(filename) as Array<string>;
 
     for (const result of readS3) {

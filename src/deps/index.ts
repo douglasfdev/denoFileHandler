@@ -29,8 +29,28 @@ export {
 
 export {
   S3,
-  type GetObjectOutput
+  type GetObjectOutput,
 } from "https://deno.land/x/aws_api@v0.8.1/services/s3/mod.ts";
+
+export {
+  SQS,
+  type GetQueueUrlRequest,
+  type GetQueueUrlResult,
+  type CreateQueueRequest,
+  type CreateQueueResult,
+  type SendMessageResult,
+} from 'https://deno.land/x/aws_api@v0.8.1/services/sqs/mod.ts';
+
+export {
+  type Message,
+} from 'https://deno.land/x/aws_api@v0.8.1/services/sqs/structs.ts';
+
+export {
+  cron,
+  daily,
+  monthly,
+  weekly
+} from "https://deno.land/x/deno_cron@v1.0.0/cron.ts";
 
 export {
   Status

@@ -26,7 +26,7 @@ export class MySql {
 
       return query;
     } catch (e) {
-      MySql.handleQueryError(e);
+      // MySql.handleQueryError(e);
     }
   }
 
