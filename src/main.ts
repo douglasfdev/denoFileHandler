@@ -42,7 +42,7 @@ class App {
       log.info(`Database: ${env.MYSQL_DATABASE}`);
       log.success(`Server is listening on ${secure ? "https" : "http"}://${hostname}:${port}`);
       log.success(`Server is running on ${hostname}:${port}`)
-    })
+    });
   }
 }
 

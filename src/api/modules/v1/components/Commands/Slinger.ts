@@ -15,7 +15,7 @@ export class Slinger {
   private handleDisareByMinute() {
     everyMinute(async () => {
       await new FileService().listenFiles();
-    })
+    });
   }
 }
 

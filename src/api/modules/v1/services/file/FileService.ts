@@ -65,10 +65,6 @@ export class FileService implements IFileService {
       };
     }
 
-    pendings.map(
-      pending => this.personService.listenAndCreatePerson(pending.name)
-    );
-
     return files;
   }
 }
