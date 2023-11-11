@@ -7,26 +7,22 @@ import {
   GetObjectOutput,
 } from "$deps";
 import {
-  awsS3Config,
   env,
   log
 } from "$common";
 
 class SimpleCloudStorage {
-  private s3: S3;
   private apiFactory: ApiFactory;
   private bucketName = env.S3_BUCKET_NAME;
 
   constructor(
-    s3: S3,
     apiFactory: ApiFactory
   ) {
-    this.s3 = s3;
     this.apiFactory = apiFactory;
     this.init();
   }
 
-  public async init() {
+  public init() {
     return this.createBucket();
   }
 
@@ -50,6 +46,7 @@ class SimpleCloudStorage {
 
   private async handleReadFile(objectKey: string): Promise<Array<string> | undefined> {
     const s3 = await this.makeNewBucket();
+
     try {
       const result = await s3.getObject({
         Bucket: this.bucketName,
@@ -104,29 +101,31 @@ class SimpleCloudStorage {
   }
 
   private async createBucket(): Promise<CreateBucketOutput> {
-    const s3 = await this.makeNewBucket()
+    const s3 = this.makeNewBucket()
     const createBucket = await s3.createBucket(this.configBucket());
     return createBucket;
   }
 
   private configBucket(): CreateBucketRequest {
     return {
-      ACL: "private",
+      ACL: "public-read",
       Bucket: this.bucketName,
     }
   }
 
-  private async makeNewBucket(): Promise<S3> {
+  private makeNewBucket(): S3 {
     return this.apiFactory.makeNew(S3);
   }
-}
-
-await new SimpleCloudStorage(
-  new S3(new ApiFactory()),
-  new ApiFactory(awsS3Config),
-).init();
+};
 
 export default new SimpleCloudStorage(
-  new S3(new ApiFactory()),
-  new ApiFactory(awsS3Config),
+  new ApiFactory({
+    region: env.AWS_REGION,
+    fixedEndpoint: env.AWS_ENDPOINT,
+    credentials: {
+      awsAccessKeyId: env.AWS_ACCESS_KEY_ID,
+      awsSecretKey: env.AWS_SECRET_ACCESS_KEY,
+      region: env.AWS_REGION,
+    }
+  }),
 );

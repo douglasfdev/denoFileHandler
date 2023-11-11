@@ -14,7 +14,8 @@
   },
   "tasks": {
     "start": "APP_ENV=production deno run --allow-all src/main.ts",
-    "dev": "APP_ENV=development deno run --allow-read --allow-net --allow-env --allow-write --watch src/main.ts",
+    "dev": "APP_ENV=development deno run --allow-all --watch src/main.ts",
+    "local": "APP_ENV=local deno run --allow-all --watch src/main.ts",
     "docker:dev": "docker-compose -f ./docker/docker-compose.yml up -d"
   },
   "allow-net": "0.0.0.0:5001",

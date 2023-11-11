@@ -35,7 +35,7 @@ class App {
   }
 
   private init() {
-    this.app.listen({ port: 5002 });
+    this.app.listen({ port: Number(env.PORT) });
     this.app.addEventListener("listen", ({ hostname, port, secure }) => {
       log.info(`Database: ${env.MYSQL_DATABASE}`);
       log.success(`Server is listening on ${secure ? "https" : "http"}://${hostname}:${port}`);

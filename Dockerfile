@@ -1,4 +1,4 @@
-FROM denoland/deno:alpine-1.37.2
+FROM denoland/deno:1.38.1
 
 EXPOSE 8080
 
@@ -6,8 +6,10 @@ WORKDIR /www/deno/app
 
 USER deno
 
-COPY ./deno.json .
+COPY ./deno.json ./deno.json
+
+RUN mkdir -p /var/tmp/log
 
 COPY . .
 
-CMD ["deno", "task", "start", "--config", "deno.json", "src/main.ts"]
+CMD ["deno", "task", "start"]

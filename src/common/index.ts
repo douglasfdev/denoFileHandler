@@ -1,4 +1,3 @@
-export { awsS3Config } from './aws.config.ts';
 export { mySqlConfig } from './mysql.config.ts';
 export { log } from './logger.ts';
 export { env } from './env.config.ts';
