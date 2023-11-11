@@ -1,4 +1,4 @@
-import { mySqlConfig } from "$common";
+import { log, mySqlConfig } from "$common";
 import { Client } from '$deps';
 
 export class MySql {
@@ -26,18 +26,11 @@ export class MySql {
 
       return query;
     } catch (e) {
-      // MySql.handleQueryError(e);
+      if (e instanceof Deno.errors.ConnectionRefused){
+        log.error(e.message);
+        throw new Error(`connection refused ${e.message}`)
+      }
     }
   }
 
-  private static handleQueryError(error: Error) {
-    MySql.connectionAttempts++;
-
-    if (MySql.connectionAttempts >= 5) {
-      throw new Error(`
-        Exceeded maximum query attempts (${MySql.connectionAttempts}).
-        Error: ${error.message}}
-      `);
-    }
-  }
 }

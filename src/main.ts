@@ -5,11 +5,13 @@ import {
 } from "$deps";
 import { routing } from "$routes";
 import { LoggerRoutes } from "$middlewares";
-import { log, env } from '$common';
-import '$migrations';
+import { log, env } from "$common";
+import { Slinger as Command } from "$component/Commands/Slinger.ts";
+import "$migrations";
 
 class App {
   public app: Application;
+  public commands: Command;
 
   private corsOptions: CorsOptions = {
     origin: "*",
@@ -22,6 +24,7 @@ class App {
     this.middlewares();
     this.init();
     this.routes();
+    this.commands = new Command();
   }
 
   private middlewares() {

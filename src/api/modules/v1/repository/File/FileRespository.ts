@@ -1,4 +1,4 @@
-import { IFileDTO } from "$common";
+import { FilenameEnum, IFileDTO } from "$common";
 import { File } from "$models";
 import { MySql } from '$db';
 
@@ -11,7 +11,7 @@ class FileRepository extends File {
   }
 
   private async create(file: string): Promise<IFileDTO> {
-    const q = `
+    const query = `
         INSERT INTO ${this.table} (
           id,
           name
@@ -21,7 +21,7 @@ class FileRepository extends File {
         );
       `;
 
-    return this.mysql.buildQuery(q, [file.replace(/\n/, "")]);
+    return this.mysql.buildQuery(query, [file.replace(/\n/, "")]);
   }
 
   public async list(): Promise<Array<IFileDTO>> {
@@ -36,6 +36,36 @@ class FileRepository extends File {
         created_at
       FROM ${this.table};
     `);
+  }
+
+  public pendingFiles(): Promise<Array<IFileDTO>> {
+    return this.foundPending();
+  }
+
+  private foundPending(): Promise<Array<IFileDTO>> {
+    return this.mysql.buildQuery(
+      `
+        SELECT
+          name,
+          status
+        FROM ${this.table}
+        WHERE status = ?;
+      `, [FilenameEnum.PENDING]
+    );
+  }
+
+  public updatedAfterListenAll() {
+    return this.updateStatusAfterListenAll();
+  }
+
+  private updateStatusAfterListenAll() {
+    return this.mysql.buildQuery(
+      `
+        UPDATE ${this.table}
+        SET status = ?
+        WHERE status = ?;
+      `, [FilenameEnum.LAUNCHED, FilenameEnum.PENDING]
+    );
   }
 }
 

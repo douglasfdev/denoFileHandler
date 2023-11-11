@@ -1,20 +1,23 @@
 import { PersonRepository } from "$repositories";
-import { IPersonDTO } from "$common";
+import {
+  IPersonDTO,
+  log
+} from "$common";
 import {
   S3,
 } from "$components";
 
 export class PersonService {
-  private personRpository: typeof PersonRepository;
+  private personRepository: typeof PersonRepository;
   private s3: typeof S3;
 
   constructor() {
-    this.personRpository = PersonRepository;
+    this.personRepository = PersonRepository;
     this.s3 = S3;
   }
 
   public async listPerson() {
-    return this.personRpository.listPersons();
+    return this.personRepository.listPersons();
   }
 
   public async create(filename: string): Promise<Array<Partial<IPersonDTO>>> {
@@ -41,7 +44,32 @@ export class PersonService {
         weight: Number(weight)
       }
 
-      await this.personRpository.createPersons(personObject);
+      await this.personRepository.createPersons(personObject);
+      person.push(personObject);
+    }
+
+    return person;
+  }
+
+  public async listenAndCreatePerson(filename: string) {
+    if (!filename) {
+      throw new Error(`Archive is required`);
+    }
+
+    const person: Array<Partial<IPersonDTO>> = [];
+    const readS3 = await this.s3.readFileFromS3(filename) as Array<string>;
+
+    for (const result of readS3) {
+      const [name, age, sex, size, weight] = result.split(",");
+      const personObject: Partial<IPersonDTO> = {
+        name,
+        age: Number(age),
+        sex,
+        size: Number(size),
+        weight: Number(weight)
+      }
+
+      await this.personRepository.createPersons(personObject);
       person.push(personObject);
     }
 

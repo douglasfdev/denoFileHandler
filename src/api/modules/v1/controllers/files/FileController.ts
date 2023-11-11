@@ -41,6 +41,16 @@ class Files implements IFileController {
       };
     }
   }
+
+  public async listenFiles(ctx: RouterContext<string>) {
+    try {
+      ctx.response.status = Status.OK;
+      return ctx.response.body = await FileService.listenFiles();
+    } catch (er) {
+      ctx.response.status = Status.BadRequest;
+      log.error(er.message);
+    }
+  }
 }
 
 export default new Files();

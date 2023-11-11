@@ -15,11 +15,13 @@ export class Migration_Tb_Filename {
       CREATE TABLE IF NOT EXISTS tb_filename (
         id VARCHAR(255) DEFAULT(UUID_TO_BIN(UUID())),
         name VARCHAR(255) NOT NULL,
+        status TINYINT(1) DEFAULT 0,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         deleted_at TIMESTAMP DEFAULT NULL,
         PRIMARY KEY (id),
         INDEX idx_id (id),
+        INDEX idx_status (status),
         INDEX idx_name (name)
       );
     `

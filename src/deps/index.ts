@@ -47,9 +47,12 @@ export {
 
 export {
   cron,
+  everyMinute,
+  hourly,
   daily,
   monthly,
-  weekly
+  weekly,
+  yearly
 } from "https://deno.land/x/deno_cron@v1.0.0/cron.ts";
 
 export {
