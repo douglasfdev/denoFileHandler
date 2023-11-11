@@ -1,9 +1,10 @@
 import { IFileDTO } from "$common";
-import { client } from "$db";
 import { File } from "$models";
+import { MySql } from '$db';
 
 class FileRepository extends File {
-  public table: string = 'tb_filename';
+  public table = 'tb_filename';
+  private mysql: typeof MySql = MySql;
 
   public async handleCreate(file: string): Promise<IFileDTO> {
     return this.create(file);
@@ -20,7 +21,7 @@ class FileRepository extends File {
         );
       `;
 
-    return client.query(q, [file.replace(/\n/, "")]);
+    return this.mysql.buildQuery(q, [file.replace(/\n/, "")]);
   }
 
   public async list(): Promise<Array<IFileDTO>> {
@@ -28,7 +29,7 @@ class FileRepository extends File {
   }
 
   private async listAll(): Promise<Array<IFileDTO>> {
-    return client.query(`
+    return this.mysql.buildQuery(`
       SELECT
         id,
         name,

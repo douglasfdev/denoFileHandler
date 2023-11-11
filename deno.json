@@ -6,9 +6,11 @@
     "$services": "./src/api/modules/v1/services/index.ts",
     "$repositories": "./src/api/modules/v1/repository/index.ts",
     "$components": "./src/api/modules/v1/components/index.ts",
+    "$middlewares": "./src/api/middlewares/index.ts",
     "$models": "./src/api/modules/v1/models/index.ts",
     "$interfaces": "./src/common/interfaces/index.ts",
-    "$middlewares": "./src/api/middlewares/index.ts",
+    "$enums": "./src/common/enums/index.ts",
+    "$migrations": "./src/api/db/migrations/index.ts",
     "$routes": "./src/api/modules/v1/routes/index.ts",
     "$db": "./src/api/db/index.ts"
   },

@@ -8,12 +8,14 @@ export {
 } from 'https://deno.land/x/oak@v12.6.1/mod.ts';
 
 export {
-  oakCors
+  oakCors,
+  type CorsOptions,
 } from 'https://deno.land/x/cors@v1.2.2/mod.ts';
 
 export {
-  type CorsOptions
-} from 'https://deno.land/x/cors@v1.2.2/mod.ts';
+  Client,
+  type ClientConfig,
+} from "https://deno.land/x/mysql@v2.12.1/mod.ts";
 
 export {
   ApiFactory

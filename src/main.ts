@@ -6,8 +6,7 @@ import {
 import { routing } from "$routes";
 import { LoggerRoutes } from "$middlewares";
 import { log, env } from '$common';
-
-import './api/db/migrations/index.ts';
+import '$migrations';
 
 class App {
   public app: Application;

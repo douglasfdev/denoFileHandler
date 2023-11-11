@@ -1,9 +1,10 @@
-import { client } from '$db';
+import { MySql } from '$db';
 import { Person } from "$models";
 import { IPersonDTO } from "$common";
 
 class PersonRepository extends Person {
-  public table: string = 'tb_pessoa';
+  public table = 'tb_pessoa';
+  private mysql: typeof MySql = MySql;
 
   public listPersons() {
     return this.getPersons();
@@ -40,11 +41,11 @@ class PersonRepository extends Person {
       person.weight
     ];
 
-    return client.query(q, values);
+    return this.mysql.buildQuery(q, values);
   }
 
   private getPersons() {
-    return client.query(
+    return this.mysql.buildQuery(
       `
         SELECT
         *
