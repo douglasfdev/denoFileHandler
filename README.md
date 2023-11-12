@@ -36,7 +36,8 @@ POST localhost:5001/v1/api/uploadFile/
 Retorno de sucesso:
 ```json
 {
-  "message": "File upload with success!"
+  "message": "File upload with success!",
+  "file": "bd40728a-e82b-4dce-91e0-c6d4701ab7ef.csv"
 }
 ```
 ----

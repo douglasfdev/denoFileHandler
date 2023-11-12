@@ -13,11 +13,12 @@ class Files implements IFileController {
       if (!body.files) {
        throw new Error("Doesn't have a file with csv format to upload");
       }
-      await FileService.handlerFilesPerson(body.files);
+      const file = await FileService.handlerFilesPerson(body.files);
 
       ctx.response.status = Status.Created;
       return ctx.response.body = {
         message: "File upload with success!",
+        file
       };
     // deno-lint-ignore no-explicit-any
     } catch (er: Error | any | unknown) {

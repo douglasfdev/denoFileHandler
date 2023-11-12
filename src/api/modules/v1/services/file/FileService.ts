@@ -18,14 +18,15 @@ export class FileService implements IFileService {
     this.fileRepository = FileRespository;
   }
 
-  public async handlerFilesPerson(files: Array<FormDataFile>): Promise<void> {
+  public async handlerFilesPerson(files: Array<FormDataFile>): Promise<string> {
     return this.processFilesPerson(files);
   }
 
-  private async processFilesPerson(files: Array<FormDataFile>): Promise<void> {
+  private async processFilesPerson(files: Array<FormDataFile>): Promise<string> {
     if (!files) {
       throw new Error('The file is required');
     }
+    let name = '';
 
     for (const file of files) {
       const isTypeCsvOrXml = file.contentType === "text/csv" ||
@@ -45,8 +46,11 @@ export class FileService implements IFileService {
         await this.s3.handlerBucket(whithoutHeader, filename);
 
         await this.fileRepository.handleCreate(filename);
+
+        name = filename;
       }
     }
+    return name;
   }
 
   public async listFiles(): Promise<Array<IFileDTO>> {
