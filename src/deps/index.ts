@@ -24,7 +24,8 @@ export {
 export {
   type CreateBucketOutput,
   type CreateBucketRequest,
-  type PutObjectOutput
+  type PutObjectOutput,
+  type ListObjectsOutput,
 } from "https://deno.land/x/aws_api@v0.8.1/services/s3/structs.ts";
 
 export {
@@ -53,7 +54,8 @@ export {
   daily,
   monthly,
   weekly,
-  yearly
+  yearly,
+  start
 } from "https://deno.land/x/deno_cron@v1.0.0/cron.ts";
 
 export {

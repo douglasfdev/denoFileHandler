@@ -3,8 +3,9 @@ import {
   CreateBucketOutput,
   CreateBucketRequest,
   PutObjectOutput,
-  S3,
   GetObjectOutput,
+  ListObjectsOutput,
+  S3,
 } from "$deps";
 import {
   env,
@@ -67,6 +68,24 @@ export class SimpleCloudStorage {
       }
       // deno-lint-ignore no-explicit-any
     } catch (er: Error | any | unknown) {
+      log.error(er.message);
+    }
+  }
+
+  public async listObjects(): Promise<ListObjectsOutput | undefined> {
+    return this.handleListObjects();
+  }
+
+  private async handleListObjects() {
+    const s3 = this.makeNewBucket();
+
+    try {
+      const listObjects = await s3.listObjects({
+        Bucket: this.bucketName,
+      });
+
+      return listObjects;
+    } catch (er) {
       log.error(er.message);
     }
   }

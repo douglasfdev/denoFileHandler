@@ -3,6 +3,7 @@ import { PersonService } from "$service/person/PersonService.ts";
 import {
   everyMinute,
   every15Minute,
+  start
 } from '$deps';
 
 export class Slinger {
@@ -11,8 +12,9 @@ export class Slinger {
   }
 
   private init() {
-    this.handleDisareByMinute();
+    // this.handleDisareByMinute();
     this.handleDispareByFiftyMinute();
+    start();
   }
 
   private handleDisareByMinute() {
@@ -22,7 +24,7 @@ export class Slinger {
   }
 
   private handleDispareByFiftyMinute() {
-    every15Minute(async () => {
+    everyMinute(async () => {
       await new PersonService().listenAndInsertPersonFromQueue();
     });
   }
