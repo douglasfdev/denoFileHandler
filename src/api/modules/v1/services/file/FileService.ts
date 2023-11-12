@@ -4,7 +4,6 @@ import {
   FilenameEnum,
   IFileDTO,
   IFileService,
-  IPersonDTO
 } from "$common";
 import { FileRespository } from "$repositories";
 import { PersonService } from "$service/person/PersonService.ts";

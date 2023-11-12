@@ -23,8 +23,8 @@ export class Slinger {
 
   private handleDispareByFiftyMinute() {
     every15Minute(async () => {
-      await new PersonService().listenAndInsertIntoQueue()
-    })
+      await new PersonService().listenAndInsertIntoQueue();
+    });
   }
 }
 

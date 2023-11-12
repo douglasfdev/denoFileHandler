@@ -1,5 +1,9 @@
-import { PersonRepository } from "$repositories";
 import {
+  FileRespository,
+  PersonRepository,
+} from "$repositories";
+import {
+FilenameEnum,
   IPersonDTO,
   log
 } from "$common";
@@ -11,6 +15,7 @@ import {  SimpleQueueService } from "$component/AWS/sqs.component.ts";
 
 export class PersonService {
   private personRepository: typeof PersonRepository;
+  private fileRepository: typeof FileRespository;
   private s3: SimpleCloudStorage;
   private sQs: SimpleQueueService;
 
@@ -18,6 +23,7 @@ export class PersonService {
     this.personRepository = PersonRepository;
     this.s3 = S3;
     this.sQs = new SimpleQueueService();
+    this.fileRepository = FileRespository;
   }
 
   public async listPerson() {
@@ -81,8 +87,31 @@ export class PersonService {
   }
 
   public async listenAndInsertIntoQueue() {
-    const body = this.sQs.receiptMessage();
-    console.log(body);
+    const files = await this.fileRepository.pendingFiles();
+
+    if (!files) return ;
+
+    const pendings = files.filter(
+      file => file.status === FilenameEnum.PENDING
+    );
+
+    if (!pendings) return;
+
+    const person: Array<Partial<IPersonDTO>> = [];
+
+    const datas = await this.sQs.receiptMessage();
+
+    for (const data of datas) {
+      const payload = data.Body as string;
+      const personObject: Partial<IPersonDTO> = JSON.parse(payload);
+
+      await this.personRepository.createPersons(personObject);
+      await this.fileRepository.updatedAfterListenAll();
+      person.push(personObject);
+      continue;
+    }
+
+    return person;
   }
 }
 
