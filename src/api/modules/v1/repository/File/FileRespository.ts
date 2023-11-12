@@ -38,11 +38,11 @@ class FileRepository extends File {
     `);
   }
 
-  public pendingFiles(): Promise<Array<IFileDTO>> {
+  public async pendingFiles(): Promise<Array<IFileDTO>> {
     return this.foundPending();
   }
 
-  private foundPending(): Promise<Array<IFileDTO>> {
+  private async foundPending(): Promise<Array<IFileDTO>> {
     return this.mysql.buildQuery(
       `
         SELECT

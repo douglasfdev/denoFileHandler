@@ -24,6 +24,10 @@ export class FileService implements IFileService {
   }
 
   private async processFilesPerson(files: Array<FormDataFile>): Promise<void> {
+    if (!files) {
+      throw new Error('The file is required');
+    }
+
     for (const file of files) {
       const isTypeCsvOrXml = file.contentType === "text/csv" ||
         file.contentType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -52,6 +56,10 @@ export class FileService implements IFileService {
 
   public async listenFiles() {
     const files = await this.fileRepository.pendingFiles();
+
+    if (!files) {
+      return;
+    }
 
     const pendings = files.filter(
       file => file.status === FilenameEnum.PENDING

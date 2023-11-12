@@ -41,8 +41,6 @@ export class SimpleQueueService {
     try {
       const queueUrl = await this.getQueueUrl();
 
-      console.log(await this.receiptMessage());
-
       return sqs.sendMessage({
         MessageBody: JSON.stringify(body, null, 2),
         QueueUrl: queueUrl,
