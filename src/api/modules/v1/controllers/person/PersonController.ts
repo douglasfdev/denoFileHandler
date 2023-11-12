@@ -46,11 +46,6 @@ class PersonController {
       };
     }
   }
-
-  public async insertIntoQueue(ctx: RouterContext<string>) {
-    const body = ctx.request.body();
-    return body;
-  }
 }
 
 export default new PersonController();

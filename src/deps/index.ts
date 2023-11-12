@@ -48,6 +48,7 @@ export {
 export {
   cron,
   everyMinute,
+  every15Minute,
   hourly,
   daily,
   monthly,
