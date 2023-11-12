@@ -3,7 +3,7 @@ import { Person } from "$models";
 import { IPersonDTO } from "$common";
 
 class PersonRepository extends Person {
-  public table = 'tb_pessoa';
+  public table = 'tb_person';
   private mysql: typeof MySql = MySql;
 
   public listPersons() {

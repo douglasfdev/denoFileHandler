@@ -1,6 +1,6 @@
 export {
   Migration_Tb_Filename,
-  Migration_Tb_Pessoa,
+  Migration_Tb_Person,
 } from './migrations/index.ts';
 export {
   MySql

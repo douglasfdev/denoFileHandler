@@ -2,18 +2,18 @@
 import { Client } from "$deps";
 import { mySqlConfig } from "$common";
 
-export class Migration_Tb_Pessoa {
+export class Migration_Tb_Person {
   private connection: Client = new Client();
 
   constructor() {
     this.connection.connect(mySqlConfig);
-    this.migration_tb_pessoa();
+    this.migration_tb_person();
   }
 
-  private migration_tb_pessoa() {
+  private migration_tb_person() {
     return this.connection.query(
     `
-      CREATE TABLE IF NOT EXISTS tb_pessoa (
+      CREATE TABLE IF NOT EXISTS tb_person (
         id VARCHAR(255) DEFAULT(UUID_TO_BIN(UUID())),
         name VARCHAR(255) NOT NULL,
         age INT NOT NULL,
@@ -36,4 +36,4 @@ export class Migration_Tb_Pessoa {
   }
 }
 
-new Migration_Tb_Pessoa();
+new Migration_Tb_Person();
