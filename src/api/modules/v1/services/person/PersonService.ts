@@ -62,6 +62,10 @@ export class PersonService {
   }
 
   public async listenAndCreatePerson(filename: string) {
+    this.insertPersonIntoDBAfterListen(filename);
+  }
+
+  private async insertPersonIntoDBAfterListen(filename: string) {
     if (!filename) {
       throw new Error(`Archive is required`);
     }
@@ -86,10 +90,14 @@ export class PersonService {
     return person;
   }
 
-  public async listenAndInsertIntoQueue() {
+  public async listenAndInsertPersonFromQueue() {
+    this.insertPersonIntoDBAfterListenQueue();
+  }
+
+  private async insertPersonIntoDBAfterListenQueue() {
     const files = await this.fileRepository.pendingFiles();
 
-    if (!files) return ;
+    if (!files) return;
 
     const pendings = files.filter(
       file => file.status === FilenameEnum.PENDING
