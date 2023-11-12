@@ -1,6 +1,6 @@
 <img
   src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Deno.svg/120px-Deno.svg.png"
-  style="float: right; vertical-align: top; width:5rem; height:5rem;"
+  style="float: right; vertical-align: top; width:5rem; height:5rem; background-color: #fff"
   alt="Logo DenoLand"
 />
 
