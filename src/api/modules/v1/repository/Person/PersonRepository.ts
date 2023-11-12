@@ -48,7 +48,12 @@ class PersonRepository extends Person {
     return this.mysql.buildQuery(
       `
         SELECT
-        *
+          id,
+          name,
+          age,
+          sex,
+          size,
+          weight
         FROM ${this.table};
       `
     );
