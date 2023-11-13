@@ -46,6 +46,7 @@ class FileRepository extends File {
     return this.mysql.buildQuery(
       `
         SELECT
+          id,
           name,
           status
         FROM ${this.table}
@@ -54,17 +55,17 @@ class FileRepository extends File {
     );
   }
 
-  public updatedAfterListenAll() {
-    return this.updateStatusAfterListenAll();
+  public updatedAfterListenAll(id: string) {
+    return this.updateStatusAfterListenAll(id);
   }
 
-  private updateStatusAfterListenAll() {
+  private updateStatusAfterListenAll(id: string) {
     return this.mysql.buildQuery(
       `
         UPDATE ${this.table}
         SET status = ?
-        WHERE status = ?;
-      `, [FilenameEnum.LAUNCHED, FilenameEnum.PENDING]
+        WHERE id = ?;
+      `, [FilenameEnum.LAUNCHED, id]
     );
   }
 }

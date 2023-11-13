@@ -1,4 +1,4 @@
-import { FormDataFile } from "$deps";
+import { FormDataFile, _Object } from "$deps";
 import { S3 } from "$components";
 import {
   FilenameEnum,
@@ -69,14 +69,27 @@ export class FileService implements IFileService {
     );
 
     for (const pending of pendings) {
-      if (pending.status === 0) {
+      if (pending.status === FilenameEnum.PENDING) {
         this.personService.listenAndCreatePerson(pending.name);
-        await this.fileRepository.updatedAfterListenAll();
+        await this.fileRepository.updatedAfterListenAll(pending.id)
         continue;
       };
     }
 
     return files;
+  }
+
+  public async listAllObjectsFromBucket() {
+    const objects = await this.s3.listObjects() as Array<_Object>;
+
+    const objectsFiltered = objects.map(object => {
+        return {
+          name: object.Key,
+          size: object.Size,
+        }
+    });
+
+    return objectsFiltered;
   }
 }
 

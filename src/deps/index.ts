@@ -26,6 +26,7 @@ export {
   type CreateBucketRequest,
   type PutObjectOutput,
   type ListObjectsOutput,
+  type _Object,
 } from "https://deno.land/x/aws_api@v0.8.1/services/s3/structs.ts";
 
 export {

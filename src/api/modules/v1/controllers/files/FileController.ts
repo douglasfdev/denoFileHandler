@@ -52,6 +52,16 @@ class Files implements IFileController {
       log.error(er.message);
     }
   }
+
+  public async listAllObjectsBuckets(ctx: RouterContext<string>) {
+    try {
+      ctx.response.status = Status.OK;
+      return ctx.response.body = await FileService.listAllObjectsFromBucket()
+    } catch (er) {
+      ctx.response.status = Status.BadRequest;
+      log.error(er.message);
+    }
+  }
 }
 
 export default new Files();

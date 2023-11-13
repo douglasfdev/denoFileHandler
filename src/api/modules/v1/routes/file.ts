@@ -6,5 +6,6 @@ const file = new Router();
 file.post("uploadFile/", FileController.uploadCsv);
 file.get("listAllFiles/", FileController.listAllFiles);
 file.get("listenAllFiles/", FileController.listenFiles)
+file.get("listAllObjectsBuckets/", FileController.listAllObjectsBuckets)
 
 export { file };

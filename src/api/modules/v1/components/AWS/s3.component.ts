@@ -4,7 +4,7 @@ import {
   CreateBucketRequest,
   PutObjectOutput,
   GetObjectOutput,
-  ListObjectsOutput,
+  _Object,
   S3,
 } from "$deps";
 import {
@@ -72,19 +72,19 @@ export class SimpleCloudStorage {
     }
   }
 
-  public async listObjects(): Promise<ListObjectsOutput | undefined> {
+  public async listObjects() {
     return this.handleListObjects();
   }
 
-  private async handleListObjects() {
+  private async handleListObjects(): Promise<Array<_Object> | undefined> {
     const s3 = this.makeNewBucket();
 
     try {
-      const listObjects = await s3.listObjects({
+      const listObjects = await s3.listObjectsV2({
         Bucket: this.bucketName,
       });
 
-      return listObjects;
+      return listObjects.Contents;
     } catch (er) {
       log.error(er.message);
     }
