@@ -14,7 +14,7 @@ Projeto também visa solucionar o mesmo problema caso o S3 esteja comprometido, 
 
 Chamei essa tabela de tb_person, mas ela pode ser facilmente mudada na migration que eu criei juntamente de um model que componha os atributos dessa tabela.
 
-Neste projeto também foi incluido Cron Jobs, para ele ficar escutando o banco de dados, sempre que o status do arquivo for zero que é, pendente, ele mandar para um dos serviços da AWS para a aplicação assim popular o banco de dados de acordo com esse status, e somente depois de concluido atualizar para status um que seria disparado.
+Neste projeto também foi incluido rotinas de Cron Jobs, para ele ficar escutando o banco de dados, sempre que o status do arquivo for zero que é, pendente, ele mandar para um dos serviços da AWS para a aplicação assim popular o banco de dados de acordo com esse status, e somente depois de concluido atualizar para status um que seria disparado.
 
 Projeto feito com muito carinho, obviamente tem muito a melhorar, mas o intuito foi pegar algo que eu desconhecia completamente que era o Deno, juntamente da AWS e completar esse projeto.
 
@@ -42,7 +42,7 @@ Retorno de sucesso:
 ```
 ----
 ```http
-GET localgost:5001/v1/api/listAllFiles/
+GET localhost:5001/v1/api/listAllFiles/
 ```
 ```json
 [
@@ -55,6 +55,19 @@ GET localgost:5001/v1/api/listAllFiles/
     "id": "64e96761-80d1-11ee-b9ca-0242ac1a0002",
     "name": "59254608-8743-4527-849d-2e0f832cbfe1.csv",
     "created_at": "2023-11-11T23:32:12.000Z"
+  }
+]
+```
+----
+```http
+GET localhost:5001/v1/api/listAllObjectsBuckets/
+```
+Exemplo de resposta:
+```json
+[
+  {
+    "name": "6ba02571-5520-4a2c-8e31-6ebc222e6757.csv",
+    "size": 2267
   }
 ]
 ```
