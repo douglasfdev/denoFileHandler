@@ -19,15 +19,15 @@ export class Slinger {
   }
 
   private dispareFiles() {
-    cron("* * * * * *", async () => await new FileService().listenFilesFromDB());
+    weekly(async () => await new FileService().listenFilesFromDB());
   }
 
   private disparePersonIntoQueue() {
-    cron("* * * * * *", async () => await new PersonService().listenAndInsertPersonFromQueue());
+    weekly(async () => await new PersonService().listenAndInsertPersonFromQueue());
   }
 
   private dispareFilesPayloadIntoQueue() {
-    cron("* * * * * *", async () => await new FileService().handlerPersonFromObjectIntoSQS());
+    weekly(async () => await new FileService().handlerPersonFromObjectIntoSQS());
   }
 }
 
