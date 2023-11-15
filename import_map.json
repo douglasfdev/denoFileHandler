@@ -1,0 +1,21 @@
+{
+  "imports": {
+    "$common": "./src/common/index.ts",
+    "$deps": "./src/deps/index.ts",
+    "$controllers": "./src/api/modules/v1/controllers/index.ts",
+    "$controller/": "./src/api/modules/v1/controllers/",
+    "$services": "./src/api/modules/v1/services/index.ts",
+    "$service/": "./src/api/modules/v1/services/",
+    "$repositories": "./src/api/modules/v1/repository/index.ts",
+    "$repository/": "./src/api/modules/v1/repository/",
+    "$components": "./src/api/modules/v1/components/index.ts",
+    "$component/": "./src/api/modules/v1/components/",
+    "$middlewares": "./src/api/middlewares/index.ts",
+    "$models": "./src/api/modules/v1/models/index.ts",
+    "$interfaces": "./src/common/interfaces/index.ts",
+    "$enums": "./src/common/enums/index.ts",
+    "$migrations": "./src/api/db/migrations/index.ts",
+    "$routes": "./src/api/modules/v1/routes/index.ts",
+    "$db": "./src/api/db/index.ts"
+  }
+}

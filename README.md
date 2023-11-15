@@ -19,8 +19,10 @@ Neste projeto também foi incluido rotinas de Cron Jobs, para ele ficar escutand
 Projeto feito com muito carinho, obviamente tem muito a melhorar, mas o intuito foi pegar algo que eu desconhecia completamente que era o Deno, juntamente da AWS e completar esse projeto.
 
 ### Comandos para rodar o projeto
-Para rodar o projeto com docker em background: `docker-compose up -d`
+Para rodar o projeto com docker em background: **`docker-compose up -d`**
+Para iniciar o projeto localmente na sua maquina recomendo usar o **`deno task local`** as variaveis de ambiente estao apontando para **http://localhost:5022**
 Este comando vai baixar a imagem do MySQL na versão 8, do LocalStack na ultima versão e do Deno na última versão LTS.
+Para rodar o cron que fica lançando para o S3 ou para o SQS caso o S3 esteja fora do ar basta rodar no terminal **`deno task command:local`**
 
 Para rodar o projeto em local basta rodar o comando `deno task local` na máquina
 

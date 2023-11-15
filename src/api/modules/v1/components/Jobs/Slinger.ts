@@ -1,8 +1,7 @@
 import { FileService } from '$service/file/FileService.ts';
 import { PersonService } from "$service/person/PersonService.ts";
 import {
-  everyMinute,
-  hourly,
+  weekly,
   cron,
   start,
 } from '$deps';
@@ -17,7 +16,6 @@ export class Slinger {
     this.disparePersonIntoQueue();
     this.dispareFilesPayloadIntoQueue();
     start();
-    this.init();
   }
 
   private dispareFiles() {
@@ -33,4 +31,3 @@ export class Slinger {
   }
 }
 
-export default new Slinger();
