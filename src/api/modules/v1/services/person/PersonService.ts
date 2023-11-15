@@ -114,10 +114,14 @@ export class PersonService {
       const personObject: Partial<IPersonDTO> = JSON.parse(payload);
 
       await this.personRepository.createPersons(personObject);
-      await this.fileRepository.updatedAfterListenAll();
+
       person.push(personObject);
       continue;
     }
+
+    files.forEach(
+      async file => await this.fileRepository.updatedAfterListenAll(file.id as string)
+    )
 
     return person;
   }

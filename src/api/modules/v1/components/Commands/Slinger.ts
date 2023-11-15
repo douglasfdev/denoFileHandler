@@ -2,8 +2,9 @@ import { FileService } from '$service/file/FileService.ts';
 import { PersonService } from "$service/person/PersonService.ts";
 import {
   everyMinute,
-  every15Minute,
-  start
+  hourly,
+  cron,
+  start,
 } from '$deps';
 
 export class Slinger {
@@ -12,21 +13,23 @@ export class Slinger {
   }
 
   private init() {
-    // this.handleDisareByMinute();
-    this.handleDispareByFiftyMinute();
+    this.dispareFiles();
+    this.disparePersonIntoQueue();
+    this.dispareFilesPayloadIntoQueue();
     start();
+    this.init();
   }
 
-  private handleDisareByMinute() {
-    everyMinute(async () => {
-      await new FileService().listenFiles();
-    });
+  private dispareFiles() {
+    cron("* * * * * *", async () => await new FileService().listenFilesFromDB());
   }
 
-  private handleDispareByFiftyMinute() {
-    everyMinute(async () => {
-      await new PersonService().listenAndInsertPersonFromQueue();
-    });
+  private disparePersonIntoQueue() {
+    cron("* * * * * *", async () => await new PersonService().listenAndInsertPersonFromQueue());
+  }
+
+  private dispareFilesPayloadIntoQueue() {
+    cron("* * * * * *", async () => await new FileService().handlerPersonFromObjectIntoSQS());
   }
 }
 

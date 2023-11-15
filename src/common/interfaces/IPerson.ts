@@ -1,7 +1,7 @@
 import { PersonEnum } from "../enums/index.ts";
 
 export interface IPersonDTO {
-  id: string;
+  id?: string;
   name: string;
   age: number;
   sex: string;

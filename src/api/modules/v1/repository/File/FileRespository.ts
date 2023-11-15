@@ -55,6 +55,27 @@ class FileRepository extends File {
     );
   }
 
+  public async pendingFilesByName(name: string) {
+    return this.foundPendingFileByName(name);
+  }
+
+  private async foundPendingFileByName(name: string): Promise<Array<Partial<IFileDTO>>> {
+    return this.mysql.buildQuery(
+      `
+        SELECT
+          id,
+          name,
+          CASE
+            WHEN status = 0 THEN 'PENDING'
+            WHEN status = 1 THEN 'LAUNCHED'
+          END as status
+        FROM ${this.table}
+        WHERE name = ?
+        AND status = ?;
+      `, [name, FilenameEnum.PENDING]
+    )
+  }
+
   public updatedAfterListenAll(id: string) {
     return this.updateStatusAfterListenAll(id);
   }
