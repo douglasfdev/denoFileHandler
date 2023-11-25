@@ -123,9 +123,7 @@ export class PersonService {
 
     files.forEach(
       async file => await this.fileRepository.updatedAfterListenAll(file.id as string)
-    )
-
-    return person;
+    );
   }
 }
 

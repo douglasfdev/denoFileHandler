@@ -11,6 +11,7 @@ class PersonRepository extends Person {
   }
 
   public async createPersons(person: Partial<IPersonDTO>) {
+    console.log(person);
     return this.create(person);
   }
 

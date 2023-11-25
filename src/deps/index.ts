@@ -48,18 +48,6 @@ export {
 } from 'https://deno.land/x/aws_api@v0.8.1/services/sqs/structs.ts';
 
 export {
-  cron,
-  everyMinute,
-  every15Minute,
-  hourly,
-  daily,
-  monthly,
-  weekly,
-  yearly,
-  start
-} from "https://deno.land/x/deno_cron@v1.0.0/cron.ts";
-
-export {
   Status
 } from 'https://deno.land/std@0.200.0/http/http_status.ts';
 

@@ -67,7 +67,7 @@ export class FileService implements IFileService {
     return this.fileRepository.list();
   }
 
-  public async listenFilesFromDB() {
+  public async listenFilesFromDB(): Promise<void> {
     const filesPending = await this.fileRepository.pendingFiles();
 
     if (!filesPending) {
@@ -80,8 +80,6 @@ export class FileService implements IFileService {
 
       continue;
     }
-
-    return filesPending;
   }
 
   public async listAllObjectsFromBucket(): Promise<Array<IObjectS3DTO>> {
@@ -133,9 +131,7 @@ export class FileService implements IFileService {
 
         await this.fileRepository.updatedAfterListenAll(file.id as string);
       });
-    }
-
-    return personList;
+    };
   }
 }
 

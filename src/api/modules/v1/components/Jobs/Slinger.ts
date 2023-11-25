@@ -1,10 +1,5 @@
 import { FileService } from '$service/file/FileService.ts';
 import { PersonService } from "$service/person/PersonService.ts";
-import {
-  weekly,
-  cron,
-  start,
-} from '$deps';
 
 export class Slinger {
   constructor() {
@@ -15,19 +10,18 @@ export class Slinger {
     this.dispareFiles();
     this.disparePersonIntoQueue();
     this.dispareFilesPayloadIntoQueue();
-    start();
   }
 
   private dispareFiles() {
-    weekly(async () => await new FileService().listenFilesFromDB());
+    Deno.cron("Liten Files from Database!", "0 0 * * *", async () => await new FileService().listenFilesFromDB());
   }
 
   private disparePersonIntoQueue() {
-    weekly(async () => await new PersonService().listenAndInsertPersonFromQueue());
+    Deno.cron("Liten and insert persons from the AWS SQS queue!", "0 0 * * *", async () => await new PersonService().listenAndInsertPersonFromQueue());
   }
 
   private dispareFilesPayloadIntoQueue() {
-    weekly(async () => await new FileService().handlerPersonFromObjectIntoSQS());
+    Deno.cron("Liten and insert persons from the AWS SQS queue!", "0 0 * * *", async () => await new FileService().handlerPersonFromObjectIntoSQS());
   }
 }
 
