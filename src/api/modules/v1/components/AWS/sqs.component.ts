@@ -3,7 +3,6 @@ import {
   SQS,
   CreateQueueRequest,
   CreateQueueResult,
-  GetQueueUrlRequest,
   GetQueueUrlResult,
   SendMessageResult,
   Message
@@ -55,14 +54,15 @@ export class SimpleQueueService {
     return this.receiptMessage();
   }
 
-  public async receiptMessage(): Promise<Array<Message>> {
+  private async receiptMessage(): Promise<Array<Message>> {
     const sqs = this.sqsHandler();
 
     try {
       const queueUrl = await this.getQueueUrl();
 
       const receiptMessage = await sqs.receiveMessage({
-        QueueUrl: queueUrl
+        QueueUrl: queueUrl,
+        VisibilityTimeout: 120,
       });
 
       return receiptMessage.Messages;

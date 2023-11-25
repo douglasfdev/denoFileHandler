@@ -1,0 +1,6 @@
+# flyctl launch added from .gitignore
+**/.docker/dbdata
+**/volume
+**/aws
+**/deno.lock
+fly.toml

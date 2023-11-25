@@ -107,7 +107,7 @@ export class PersonService {
 
     const person: Array<Partial<IPersonDTO>> = [];
 
-    const datas = await this.sQs.receiptMessage();
+    const datas = await this.sQs.handleReceiptMessage();
 
     for (const data of datas) {
       const payload = data.Body as string;
@@ -116,6 +116,8 @@ export class PersonService {
       await this.personRepository.createPersons(personObject);
 
       person.push(personObject);
+
+      // await this.sQs.deleteMessage(data.receiptHandle);
       continue;
     }
 
