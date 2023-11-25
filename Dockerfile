@@ -12,4 +12,4 @@ RUN mkdir -p /var/tmp/log
 
 COPY . .
 
-CMD ["APP_ENV=local", "deno", "run", "--allow-all", "src/main.ts"]
+CMD ["deno", "task", "local"]
